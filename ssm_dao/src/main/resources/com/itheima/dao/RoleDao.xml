@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.RoleDao">
+    <!--查询所有-->
+    <select id="findAll" resultType="role">
+        select * from sys_role
+    </select>
+
+    <!--保存-->
+    <insert id="save" parameterType="role">
+        insert into sys_role values(null,#{roleName},#{roleDesc})
+    </insert>
+
+
+    <resultMap id="roleMap" type="role">
+        <id property="id" column="id"></id>
+        <result property="roleName" column="roleName"></result>
+        <result property="roleDesc" column="roleDesc"></result>
+        <!--映射权限信息-->
+        <collection property="permissionList" ofType="permission"
+                  fetchType="lazy"  column="id" select="com.itheima.dao.PermissionDao.findPermissionsByRoleId"></collection>
+        <!--
+            com.itheima.dao.PermissionDao.findPermissionsByRoleId(Integer roleId)
+        -->
+    </resultMap>
+    <!--根据用户id查询角色列表-->
+    <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
+      select r.* from sys_user_role ur, sys_role r
+      where ur.roleId = r.id and ur.userId = #{userId}
+    </select>
+
+    <!--根据id查询角色对象（包含权限信息)-->
+    <select id="findById" parameterType="int" resultMap="roleMap">
+        select * from sys_role where id = #{id}
+    </select>
+    <!-- 删除原来的关系-->
+    <delete id="delPermissionsFromRole" parameterType="int">
+        delete from sys_role_permission where roleId = #{roleId}
+    </delete>
+    <!--维护新的关系-->
+    <insert id="savePermissionToRole">
+        insert into sys_role_permission values(#{param1},#{param2})
+    </insert>
+</mapper>
