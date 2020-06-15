@@ -108,9 +108,9 @@
 							<div class="pull-left">
 								<div class="form-group form-inline">
 									<div class="btn-group">
-									<%--	<button type="button" class="btn btn-default" title="新建" onclick="location.href='${pageContext.request.contextPath}/pages/user-add.jsp'">
+										<button type="button" class="btn btn-default" title="新建" onclick="location.href='${pageContext.request.contextPath}/pages/user-add.jsp'">
 											<i class="fa fa-file-o"></i> 新建
-										</button>--%>
+										</button>
 										<button type="button" class="btn btn-default" title="刷新">
 											<i class="fa fa-refresh"></i> 刷新
 										</button>
@@ -156,8 +156,7 @@
 												<a href="${pageContext.request.contextPath}/user/details?id=${user.id }" class="btn bg-olive btn-xs">详情</a>
 												<a href="${pageContext.request.contextPath}/user/addRolesToUserUI?userId=${user.id}" class="btn bg-olive btn-xs">添加角色</a>
 												<a href="${pageContext.request.contextPath}/user/delete?id=${user.id}" class="btn bg-olive btn-xs">删除</a>
-												<a href="${pageContext.request.contextPath}/user/update?id=${user.id}" class="btn bg-olive btn-xs">修改</a>
-												<a href="${pageContext.request.contextPath}/pages/user-add.jsp" class="btn bg-olive btn-xs">新增</a>
+												<a href="${pageContext.request.contextPath}/user/updateUI?id=${user.id}" class="btn bg-olive btn-xs">修改</a>
 											</td>
 										</tr>
 									</c:forEach>

@@ -121,4 +121,16 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     public SysUser findByUsername(String username) {
         return userDao.findByUsername(username);
     }
+
+    @Override
+    public void updateByUsername(SysUser user) {
+        try {
+            int i =  userDao.updateByUsername(user);
+            if (i==1){
+                log.info("更新该用户"+user.getUsername()+"信息成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

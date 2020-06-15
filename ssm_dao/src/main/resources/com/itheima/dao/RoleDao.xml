@@ -7,7 +7,10 @@
     <select id="findAll" resultType="role">
         select * from sys_role
     </select>
-
+    <!--查询所有-->
+    <select id="findByRoleNameCheck" resultType="role" parameterType="String">
+        select * from sys_role where roleName = #{roleName}
+    </select>
     <!--保存-->
     <insert id="save" parameterType="role">
         insert into sys_role values(null,#{roleName},#{roleDesc})

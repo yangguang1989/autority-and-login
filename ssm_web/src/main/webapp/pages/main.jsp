@@ -73,7 +73,39 @@
 
 		<!-- 内容区域 -->
 		<div class="content-wrapper">
+				<!--Start Page Title-->
+				<div class="page-title-box">
+					<h4 class="page-title">首页</h4>
+					<div class="clearfix"></div>
+				</div>
+				<!--End Page Title-->
+				<!--Start row-->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="white-box">
 
+							<div class="panel-group accordion-main faq-main" id="accordion">
+								<!--FAQ Item-->
+								<div class="panel">
+									<div class="panel-heading collapsed" data-toggle="collapse"
+										 data-parent="#accordion" data-target="#collapseOne">
+										<h6 class="panel-title accordion-toggle">
+											今天天气怎么样呢？
+										</h6>
+									</div>
+									<div id="collapseOne" class="panel-collapse collapse">
+										<div class="panel-body">
+											<p>
+												今天是个好日子，教师节！
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--End row-->
 		</div>
 		<!-- 内容区域 /-->
 

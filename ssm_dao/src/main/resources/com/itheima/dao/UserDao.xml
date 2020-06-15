@@ -60,4 +60,8 @@
     <insert id="saveRoleToUser" >
         insert into sys_user_role values(#{param1} ,#{param2})
     </insert>
+    <!--根据用户名更新用户信息-->
+    <update id="updateByUsername" parameterType="sysUser">
+        update sys_user set id=#{id},username=#{username},email=#{email},password=#{password},phoneNum=#{phoneNum},status=#{status} where username=#{username}
+    </update>
 </mapper>

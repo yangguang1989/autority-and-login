@@ -45,4 +45,6 @@ public interface UserService {
     void delete(Integer id);
 
     SysUser findByUsername(String username);
+
+    void updateByUsername(SysUser user);
 }

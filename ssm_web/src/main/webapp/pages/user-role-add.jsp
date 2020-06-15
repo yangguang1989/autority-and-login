@@ -118,7 +118,8 @@
 										type="checkbox" class="icheckbox_square-blue"></th>
 									<th class="sorting_asc">ID</th>
 									<th class="sorting">角色名称</th>
-									<th class="sorting">角色描述</th>									
+									<th class="sorting">角色描述</th>
+									<th class="sorting">操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -128,7 +129,9 @@
 										<td>${role.id}</td>
 										<td>${role.roleName }</td>
 										<td>${role.roleDesc}</td>
-										
+										<td class="text-center">
+											<a href="${pageContext.request.contextPath}/role/addPermissionsToRoleUI?roleId=${role.id}" class="btn bg-olive btn-xs">添加权限</a>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>

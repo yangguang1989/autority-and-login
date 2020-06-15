@@ -27,7 +27,7 @@
 					class="fa fa-dashboard"></i> <span>首页</span></a></li>
 
 			<%--其他角色访问--%>
-			<security:authorize access="hasAnyRole( 'ROLE_USER_QUERY','ROLE_USER_CREATE','ROLE_USER_UPDATE','ROLE_USER_DELETE')">
+			<security:authorize access="hasAnyRole( 'ROLE_USER','ROLE_USER1','ROLE_USER2','ROLE_USER3','ROLE_USER4','ROLE_USER5')">
 			<li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
 					<span>个人中心</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
@@ -45,7 +45,7 @@
 			<%--只有admin角色才可以 访问--%>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 				<li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
-					<span>系统管理</span> <span class="pull-right-container"> <i
+					<span>联系人管理</span> <span class="pull-right-container"> <i
 							class="fa fa-angle-left pull-right"></i>
 				</span>
 
@@ -55,7 +55,7 @@
 
 						<li id="system-setting"><a
 								href="${pageContext.request.contextPath}/user/findAll"> <i
-								class="fa fa-circle-o"></i> 用户管理
+								class="fa fa-circle-o"></i> 联系人列表
 						</a></li>
 						<li id="system-setting"><a
 								href="${pageContext.request.contextPath}/role/findAll"> <i
@@ -65,32 +65,32 @@
 								href="${pageContext.request.contextPath}/permission/findAll">
 							<i class="fa fa-circle-o"></i> 权限管理
 						</a></li>
-						<li id="system-setting"><a
-								href="${pageContext.request.contextPath}/pages/syslog-list.jsp"> <i
-								class="fa fa-circle-o"></i> 访问日志
-						</a></li>
+							<%--<li id="system-setting"><a
+                                    href="${pageContext.request.contextPath}/pages/syslog-list.jsp"> <i
+                                    class="fa fa-circle-o"></i> 访问日志
+                            </a></li>--%>
 					</ul></li>
 			</security:authorize>
 			<%--user和admin都可以访问--%>
-			<%--<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">--%>
-		<%--	<li class="treeview"><a href="#"> <i class="fa fa-cube"></i>
-					<span>基础数据</span> <span class="pull-right-container"> <i
+			<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+			<li class="treeview"><a href="#"> <i class="fa fa-cube"></i>
+					<span>订单数据</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
 			</a>
 				<ul class="treeview-menu">
 
-					<li id="system-setting"><a
+					<%--<li id="system-setting"><a
 						href="${pageContext.request.contextPath}/product/findAll">
 							<i class="fa fa-circle-o"></i> 产品管理
-					</a></li>
+					</a></li>--%>
 					<li id="system-setting"><a
 						href="${pageContext.request.contextPath}/orders/findAll">
 							<i class="fa fa-circle-o"></i> 订单管理
 					</a></li>
 
-				</ul></li>--%>
-			<%--</security:authorize>--%>
+				</ul></li>
+			</security:authorize>
 		</ul>
 	</section>
 	<!-- /.sidebar -->

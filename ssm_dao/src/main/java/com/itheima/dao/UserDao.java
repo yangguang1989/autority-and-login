@@ -56,4 +56,6 @@ public interface UserDao {
     void saveRoleToUser(Integer userId, Integer roleId );
 
     void deleteByUserId(Integer id);
+
+    int updateByUsername(SysUser user);
 }

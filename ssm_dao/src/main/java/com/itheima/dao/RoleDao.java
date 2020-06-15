@@ -46,4 +46,7 @@ public interface RoleDao {
      * @param roleId
      */
     void savePermissionToRole(Integer permissionId, Integer roleId);
+
+    Role findByRoleNameCheck(String roleName);
+
 }

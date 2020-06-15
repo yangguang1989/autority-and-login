@@ -96,13 +96,13 @@
 				<section class="content"> <!--产品信息-->
 
 				<div class="panel panel-default">
-					<div class="panel-heading">角色信息</div>
+					<div class="panel-heading">角色信息</div><span id="tishi"></span>
 					<div class="row data-type">
 
 						<div class="col-md-2 title">角色名称</div>
 						<div class="col-md-4 data">
-							<input type="text" class="form-control" name="roleName"
-								placeholder="角色名称" value="">
+							<input id="roleName" type="text" class="form-control" name="roleName"
+								placeholder="角色名称" onchange="checkRoleName()" value="">
 						</div>
 						<div class="col-md-2 title">角色描述</div>
 						<div class="col-md-4 data">
@@ -115,7 +115,7 @@
 				</div>
 				<!--订单信息/--> <!--工具栏-->
 				<div class="box-tools text-center">
-					<button type="submit" class="btn bg-maroon">保存</button>
+					<button id="saveBtn" type="submit" class="btn bg-maroon">保存</button>
 					<button type="button" class="btn bg-default"
 						onclick="history.back(-1);">返回</button>
 				</div>
@@ -245,7 +245,52 @@
 		}
 
 	</script>
-	
+	<script type="text/javascript">
+        /**
+         * 检测用角色是否是唯一的
+         * 	1. 获取角色名
+         * 	2. ajax 发送请求，由服务端验证角色是否存在，返回结果
+         * 		如果存在，返回1
+         * 		如果不存在，返回0
+         * 	3. 如果存在，提交按钮不可用，提示角色已存在
+         *
+         */
+        function checkRoleName(){
+            var roleName = $("#roleName").val();
+            $.ajax({
+                url:"${pageContext.request.contextPath}/role/checkRoleName",
+                type:'post',
+                data:{"roleName":roleName},
+                success:function(data){
+                    var msg = (typeof (data) == "object" ? msg : JSON.parse(data));
+                    //成功回调函数
+                    //如果存在，改变样式
+                    if(msg.str == 1){
+                        //边框改变为红色
+                        // $("#username").css("border","red 1px solid");
+                        $("#tishi").show();
+                        $("#tishi").html(msg.warning);
+                        //保存按钮不可用
+                        //$("#saveBtn").attr("disabled","disabled");
+                        $("#saveBtn").prop("disabled",true);
+                    }
+                    //如果不存在，恢复原来的样式
+                    if (msg.str == 0){
+                        $("#tishi").show();
+                        $("#tishi").html(msg.warning);
+                        $("#saveBtn").prop("disabled",false);
+                    }
+                    //创建角色名的规则
+                    if(msg.str == 2){
+                        $("#tishi").show();
+                        $("#tishi").html(msg.warning);
+                        $("#saveBtn").prop("disabled",true);
+                    }
+                }
+
+            });
+        }
+	</script>
 
 </body>
 

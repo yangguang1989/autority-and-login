@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" isELIgnored="false" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -91,7 +92,7 @@
 			</section>
 			<!-- 内容头部 /-->
 
-			<form action="${pageContext.request.contextPath}/user/save"
+			<form action="${pageContext.request.contextPath}/user/update"
 				method="post">
 				<!-- 正文区域 -->
 				<section class="content"> <!--产品信息-->
@@ -99,14 +100,14 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">用户信息</div>
 					<div class="row data-type">
-
+						<div>
+							<input type="hidden" id="id"  class="form-control" name="id"
+								   placeholder="用户id" value="${user.id}"  >
+						</div>
 						<div class="col-md-2 title">用户名称</div>
 						<div class="col-md-4 data">
-							<%--
-								onchange: 内容改变，失去焦点时执行事件
-							--%>
-							<input type="text" id="username" onchange="checkUsername()" class="form-control" name="username"
-								placeholder="用户名称" value="${user.username}">
+							<input type="text" id="username"  class="form-control" name="username"
+								placeholder="用户名称" value="${user.username}"  >
 						 </div>
 						<div class="col-md-2 title">密码</div>
 						<div class="col-md-4 data">
@@ -126,9 +127,15 @@
 						<div class="col-md-2 title">用户状态</div>
 						<div class="col-md-4 data">
 							<select class="form-control select2" style="width: 100%"
-								name="status"  value="${user.status}>
-								<option value="0">关闭</option>
-								<option value="1">开启</option>
+									name="status">
+								<option value="${user.status}">${user.status==0?"关闭":"开启"}</option>
+								<c:if test="${user.status==0}">
+									<option value="1">开启</option>
+								</c:if>
+								<c:if test="${user.status==1}">
+									<option value="0">关闭</option>
+								</c:if>
+
 							</select>
 						</div>
 

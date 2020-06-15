@@ -40,8 +40,13 @@ public class RoleServiceImpl implements RoleService {
         //维护新的关系
         if(ids != null){
             for (Integer permissionId : ids) {
-                roleDao.savePermissionToRole( permissionId,roleId);
+                roleDao.savePermissionToRole(roleId,permissionId);
             }
         }
+    }
+
+    @Override
+    public Role findByRoleNameCheck(String roleName) {
+        return roleDao.findByRoleNameCheck(roleName);
     }
 }

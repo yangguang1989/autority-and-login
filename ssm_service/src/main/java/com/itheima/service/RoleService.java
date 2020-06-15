@@ -1,6 +1,7 @@
 package com.itheima.service;
 
 import com.itheima.domain.Role;
+import com.itheima.domain.SysUser;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface RoleService {
      * @param ids
      */
     void savePermissionsToRole(Integer roleId, Integer[] ids);
+
+    Role findByRoleNameCheck(String roleName);
 }

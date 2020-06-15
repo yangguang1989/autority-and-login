@@ -1,5 +1,8 @@
 package com.itheima.controller;
 
+
+
+import com.alibaba.fastjson.JSONObject;
 import com.itheima.domain.Permission;
 import com.itheima.domain.Role;
 import com.itheima.domain.SysUser;
@@ -13,12 +16,18 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yangjianguang
@@ -94,7 +103,6 @@ public class UserController {
      * @return
      */
     @RequestMapping("/save")
-    @Secured({"ROLE_ADMIN","ROLE_USER_CREATE"})
     public String save(SysUser user){
         //保存操作
         userService.save(user);
@@ -108,7 +116,6 @@ public class UserController {
      * @return
      */
     @RequestMapping("/delete")
-    @Secured({"ROLE_ADMIN","ROLE_USER_DELETE"})
     public String delete(Integer id){
         log.info("准备要删除的用户id是:"+id);
         userService.delete(id);
@@ -117,13 +124,33 @@ public class UserController {
     }
 
     /**
-     * 删除用户
+     * 验证用户名是否存在
+     * @param username
+     */
+    @ResponseBody
+    @RequestMapping("/checkUsername")
+    public void checkUsername(String username,HttpServletResponse response) throws IOException {
+        //根据用户名查询用户对象
+        SysUser user = userService.findByUsernameCheck(username);
+        HashMap<String, Object> map = new HashMap<>();
+        if (user != null) {
+              map.put("warning", "<font color='red'>抱歉，该用户名已被注册，请重新设置</font>");
+              map.put("str","1");
+           } else {
+              map.put("warning", "<font color='green'>恭喜，该用户名可用</font>");
+              map.put("str","0");
+         }
+        JSONObject jsonObject= (JSONObject) JSONObject.toJSON(map);
+        response.setContentType("text/html;charset=utf-8");
+        response.getWriter().write(jsonObject.toJSONString());
+    }
+    /**
+     * 修改用户前回显该用户信息
      * @param id
      * @return
      */
-    @RequestMapping("/update")
-    @Secured({"ROLE_ADMIN","ROLE_USER_UPDATE"})
-    public ModelAndView update(Integer id){
+    @RequestMapping("/updateUI")
+    public ModelAndView updateUI(Integer id){
         log.info("准备要修改的用户id是:"+id);
         //创建ModelAndView对象
         ModelAndView modelAndView = new ModelAndView();
@@ -137,21 +164,18 @@ public class UserController {
         return modelAndView;
     }
     /**
-     * 验证用户名是否存在
-     * @param username
+     * 修改用户前回显该用户信息
+     * @param
+     * @return
      */
-    @ResponseBody
-    @RequestMapping("/checkUsername")
-    public String checkUsername(String username){
-        //根据用户名查询用户对象
-        SysUser user = userService.findByUsernameCheck(username);
-        if(user == null){
-            return "0";
-        }else{
-            return "1";
-        }
+    @RequestMapping("/update")
+    public String  update(SysUser user){
+        log.info("准备要修改的用户是:"+user.getUsername());
+        //修改数据
+        userService.updateByUsername(user);
+        log.info("修改的用户:"+user.getUsername()+"成功");
+        return "redirect:/user/findAll";
     }
-
     /**
      * 查询用户的详情
      * @param id
