@@ -108,22 +108,14 @@
 						<div class="pull-left">
 							<div class="form-group form-inline">
 								<div class="btn-group">
-									<button type="button" class="btn btn-default" title="新建"
-										onclick='location.href="${pageContext.request.contextPath}/orders/saveUI"'>
-										<i class="fa fa-file-o"></i> 新建
-									</button>
-									<button type="button" class="btn btn-default" title="删除"
-										onclick='confirm("你确认要删除吗？")'>
-										<i class="fa fa-trash-o"></i> 删除
-									</button>
-									<button type="button" class="btn btn-default" title="开启"
-										onclick='confirm("你确认要开启吗？")'>
-										<i class="fa fa-check"></i> 开启
-									</button>
-									<button type="button" class="btn btn-default" title="屏蔽"
-										onclick='confirm("你确认要屏蔽吗？")'>
-										<i class="fa fa-ban"></i> 屏蔽
-									</button>
+									<c:forEach items="${permissionList}" var="permission">
+									<c:if test="${permission=='订单增加'}">
+										<button type="button" class="btn btn-default" title="新建"
+												onclick='location.href="${pageContext.request.contextPath}/pages/order-add.jsp"'>
+											<i class="fa fa-file-o"></i> 新建
+										</button>
+									</c:if>
+									</c:forEach>
 									<button type="button" class="btn btn-default" title="刷新"
 										onclick="window.location.reload();">
 										<i class="fa fa-refresh"></i> 刷新
@@ -154,7 +146,8 @@
 									<th class="sorting">下单时间</th>
 									<th class="sorting">支付方式</th>
 									<th class="sorting">订单状态</th>
-									<th class="sorting">产品名称</th>
+									<th class="sorting">订单名称</th>
+									<th class="sorting">订单描述</th>
 									<th class="text-center">操作</th>
 								</tr>
 							</thead>
@@ -163,17 +156,21 @@
 								<tr>
 									<td><input name="ids" type="checkbox"></td>
 									<td>${i.count}</td>
-
 									<td>${order.orderNum}</td>
 									<td>${order.orderTime}</td>
 									<td>${order.payType==1?"微信":order.payType==0?"支付宝":"其他"}</td>
 									<td>${order.orderStatus==1?"已支付":"未支付"}</td>
 									<td>${order.orderName}</td>
+									<td>${order.orderDesc}</td>
 									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
+										<c:forEach items="${permissionList}" var="permission">
+											<c:if test="${permission=='订单删除'}">
+												<a href="${pageContext.request.contextPath}/orders/delete?id=${order.id}" class="btn bg-olive btn-xs">删除</a>
+											</c:if>
+											<c:if test="${permission=='订单修改'}">
+												<a href="${pageContext.request.contextPath}/orders/updateUI?id=${order.id}" class="btn bg-olive btn-xs">修改</a>
+											</c:if>
+										</c:forEach>
 									</td>
 								</tr>
 							</c:forEach>
@@ -185,33 +182,7 @@
 						</table>
 						<!--数据列表/-->
 
-						<!--工具栏-->
-						<div class="pull-left">
-							<div class="form-group form-inline">
-								<div class="btn-group">
-									<button type="button" class="btn btn-default" title="新建"
-										onclick='location.href="all-order-manage-edit.html"'>
-										<i class="fa fa-file-o"></i> 新建
-									</button>
-									<button type="button" class="btn btn-default" title="删除"
-										onclick='confirm("你确认要删除吗？")'>
-										<i class="fa fa-trash-o"></i> 删除
-									</button>
-									<button type="button" class="btn btn-default" title="开启"
-										onclick='confirm("你确认要开启吗？")'>
-										<i class="fa fa-check"></i> 开启
-									</button>
-									<button type="button" class="btn btn-default" title="屏蔽"
-										onclick='confirm("你确认要屏蔽吗？")'>
-										<i class="fa fa-ban"></i> 屏蔽
-									</button>
-									<button type="button" class="btn btn-default" title="刷新"
-										onclick="window.location.reload();">
-										<i class="fa fa-refresh"></i> 刷新
-									</button>
-								</div>
-							</div>
-						</div>
+
 						<div class="box-tools pull-right">
 							<div class="has-feedback">
 								<input type="text" class="form-control input-sm"

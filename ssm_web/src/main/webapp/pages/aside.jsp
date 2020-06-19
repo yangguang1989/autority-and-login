@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%--引入security标签库--%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <aside class="main-sidebar">
 	<!-- sidebar: style can be found in sidebar.less -->
 	<section class="sidebar">
@@ -27,7 +28,7 @@
 					class="fa fa-dashboard"></i> <span>首页</span></a></li>
 
 			<%--其他角色访问--%>
-			<security:authorize access="hasAnyRole( 'ROLE_USER','ROLE_USER1','ROLE_USER2','ROLE_USER3','ROLE_USER4','ROLE_USER5')">
+			<%--<security:authorize access="hasAnyRole( 'ROLE_USER','ROLE_USER1','ROLE_USER2','ROLE_USER3','ROLE_USER4','ROLE_USER5')">--%>
 			<li class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
 					<span>个人中心</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
@@ -37,10 +38,10 @@
 
 					<li id="system-setting"><a
 						href="${pageContext.request.contextPath}/user/findOne"> <i
-							class="fa fa-circle-o"></i> 用户管理
+							class="fa fa-circle-o"></i> 个人信息管理
 					</a></li>
-				</ul></li>
-			</security:authorize>
+				</ul></li><%--</security:authorize>--%>
+
 
 			<%--只有admin角色才可以 访问--%>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
@@ -72,8 +73,8 @@
 					</ul></li>
 			</security:authorize>
 			<%--user和admin都可以访问--%>
-			<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-			<li class="treeview"><a href="#"> <i class="fa fa-cube"></i>
+			<%--<security:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">--%>
+            <li id="order" class="treeview"><a href="#"> <i class="fa fa-cogs"></i>
 					<span>订单数据</span> <span class="pull-right-container"> <i
 						class="fa fa-angle-left pull-right"></i>
 				</span>
@@ -90,8 +91,31 @@
 					</a></li>
 
 				</ul></li>
-			</security:authorize>
+			<%--</security:authorize>--%>
 		</ul>
 	</section>
 	<!-- /.sidebar -->
 </aside>
+<script type="text/javascript">
+    window.onload=function(){
+        $.ajax({
+            url:"${pageContext.request.contextPath}/orders/findPermission",
+            type:'post',
+            data:"",
+            success:function(data) {
+                var msg = JSON.parse(data);
+                if (msg.flag!=0) {
+                    $("#order").hide();
+                }
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+
+

@@ -109,7 +109,14 @@
 							<div class="pull-left">
 								<div class="form-group form-inline">
 									<div class="btn-group">
-
+										<c:forEach items="${permissionList}" var="permission">
+											<c:if test="${permission=='订单增加'}">
+												<button type="button" class="btn btn-default" title="新建"
+														onclick='location.href="${pageContext.request.contextPath}/pages/user-add.jsp"'>
+													<i class="fa fa-file-o"></i> 新建
+												</button>
+											</c:if>
+										</c:forEach>
 										<button type="button" class="btn btn-default" title="刷新">
 											<i class="fa fa-refresh"></i> 刷新
 										</button>
@@ -153,16 +160,12 @@
 											<td class="text-center">
 												<a href="${pageContext.request.contextPath}/user/details?id=${user.id }" class="btn bg-olive btn-xs">详情</a>
 												<c:forEach items="${permissionList}" var="permission">
-													<c:if test="${permission=='删除'}">
+													<c:if test="${permission=='用户删除'}">
 														<a href="${pageContext.request.contextPath}/user/delete?id=${user.id}" class="btn bg-olive btn-xs">删除</a>
 													</c:if>
-													<c:if test="${permission=='修改'}">
+													<c:if test="${permission=='用户修改'}">
 														<a href="${pageContext.request.contextPath}/user/update?id=${user.id}" class="btn bg-olive btn-xs">修改</a>
 													</c:if>
-													<c:if test="${permission=='增加'}">
-														<a href="${pageContext.request.contextPath}/pages/user-add.jsp" class="btn bg-olive btn-xs">新增</a>
-													</c:if>
-												<a
 												</c:forEach>
 											</td>
 											</c:forEach>
