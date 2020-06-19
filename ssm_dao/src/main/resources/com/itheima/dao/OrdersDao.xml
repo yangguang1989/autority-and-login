@@ -32,13 +32,25 @@
        <!-- <association property="product" column="productId"
                      javaType="product" select="com.itheima.dao.ProductDao.findById"></association>-->
     </resultMap>
-    <!--查询所有订单（包含产品对象）-->
+    <!--查询所有订单-->
     <select id="findAll" resultMap="orderMap">
         select * from sys_order
     </select>
-
+    <!--修改时查询某个订单-->
+    <select id="findById" parameterType="int" resultType="Orders">
+        select * from sys_order where id=#{id}
+    </select>
+    <!--删除订单-->
+    <select id="delete" parameterType="int" >
+        delete from sys_order where id=#{id}
+    </select>
     <!--保存-->
     <insert id="save" parameterType="orders">
-        insert into sys_order values(null,#{orderNum},#{orderTime},#{peopleCount},#{orderDesc},#{payType},#{orderStatus},#{product.id})
+        insert into sys_order values(null,#{orderNum},#{orderTime},#{orderDesc},#{payType},#{orderStatus},#{orderName})
     </insert>
+    <!--修改-->
+    <update id="updateByOrdersId" parameterType="orders">
+        update sys_order set orderNum=#{orderNum},orderTime=#{orderTime},orderDesc=#{orderDesc},payType=#{payType},orderStatus=#{orderStatus},orderName=#{orderName}
+        where id=#{id}
+</update>
 </mapper>

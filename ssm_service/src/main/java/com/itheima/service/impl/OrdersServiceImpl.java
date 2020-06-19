@@ -29,4 +29,19 @@ public class OrdersServiceImpl implements OrdersService {
         ordersDao.save(orders);
     }
 
+    @Override
+    public Orders findById(Integer id) {
+        return ordersDao.findById(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        ordersDao.delete(id);
+    }
+
+    @Override
+    public void updateByOrdersId(Orders orders) {
+        ordersDao.updateByOrdersId(orders);
+    }
+
 }

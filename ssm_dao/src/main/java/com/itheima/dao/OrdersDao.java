@@ -21,4 +21,10 @@ public interface OrdersDao {
      * @param orders
      */
     void save(Orders orders);
+
+    Orders findById(Integer id);
+
+    void delete(Integer id);
+
+    void updateByOrdersId(Orders orders);
 }
